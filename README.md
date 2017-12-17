@@ -6,11 +6,12 @@
 
 This package is for those who like beautiful, orderly and easily program code!
 
-#### Example:
+### Example:
 
-### Source In
+#### Source In
 
-```
+```php
+
 @php
 
 @class Test
@@ -43,9 +44,10 @@ This package is for those who like beautiful, orderly and easily program code!
 
 ```
 
-### Source Out
+#### Source Out
 
-```
+```php
+
 <?php
 
 class Test{
