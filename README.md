@@ -3,3 +3,77 @@
 # pphp
 
 ## Preprocessor PHP
+
+This package is for those who like beautiful, orderly and easily program code!
+
+#### Example:
+
+### Source In
+
+```
+@php
+
+@class Test
+
+    $test = 1;
+
+    $arr = [];
+
+	@function(static)+ test()
+
+		@foreach($arr as $ar)
+
+			$var = $ar.foo + 1;
+
+		@end
+
+	@end
+
+	@function(static)+ staticTest()
+
+		@if($arr.0)
+
+			$var = $arr.0;
+
+		@end
+
+	@end
+
+@end
+
+```
+
+### Source Out
+
+```
+<?php
+
+class Test{
+
+    $test = 1;
+
+    $arr = [];
+
+	public static function test(){
+
+		foreach($arr as $ar){
+
+			$var = $ar['foo'] + 1;
+
+		}
+
+	}
+
+	public static function staticTest(){
+
+		@if($arr[0])
+
+			$var = $arr[0];
+
+		}
+
+	}
+
+}
+
+```
