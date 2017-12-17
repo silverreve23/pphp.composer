@@ -29,7 +29,7 @@ lineReader.on('line', function(line){
 		
 	});
 	
-	line = line.replace(/@if\s*\([\s\$|(\=\>\<\!)|\[\]|\w]{1,}\s*\)/, function(findedStr){
+	line = line.replace(/@if\s*\([\s\$|(\=\>\<\!)|\[\]|\.|0-9|\w]{1,}\s*\)/, function(findedStr){
 		
 		return findedStr.substr(1) + "{";
 		

@@ -10,7 +10,7 @@
 	
 		@foreach($arr as $ar)
 		
-			$var = $ar.foo + 1;
+			$var = @$ar.foo + 1;
 			
 		@end
 		
@@ -20,7 +20,7 @@
 	
 		@if($arr.0)
 		
-			$var = $arr[0];
+			$var = $arr.0;
 			
 		@end
 		

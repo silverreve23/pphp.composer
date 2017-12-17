@@ -1,4 +1,6 @@
-<p align="center"><img src="https://github.com/silverreve23/pphp/blob/master/system/image/pphp.png"></p>
+<p align="center">
+	<img src="https://github.com/silverreve23/pphp/blob/master/system/image/pphp.png">
+</p>
 
 # pphp
 
@@ -17,31 +19,32 @@ This package is for those who like beautiful, orderly and easily program code!
 
 @class Test
 
-    $test = 1;
-
-    $arr = [];
-
-	@function(static)+ test()
-
-		@foreach($arr as $ar)
-
-			$var = $ar.foo + 1;
-
-		@end
-
+  $test = 1;
+    
+  $arr = [];
+    
+  @function(static)+ test()
+	
+	@foreach($arr as $ar)
+		
+	  $var = @$ar.foo + 1;
+			
 	@end
-
-	@function(static)+ staticTest()
-
-		@if($arr.0)
-
-			$var = $arr.0;
-
-		@end
-
+		
+  @end
+	
+  @function(static)+ staticTest()
+	
+    @if($arr.0)
+		
+	  $var = $arr.0;
+			
 	@end
-
+		
+  @end
+	
 @end
+
 
 ```
 
@@ -53,30 +56,30 @@ This package is for those who like beautiful, orderly and easily program code!
 
 class Test{
 
-    $test = 1;
-
-    $arr = [];
-
-	public static function test(){
-
-		foreach($arr as $ar){
-
-			$var = $ar['foo'] + 1;
-
-		}
-
+  $test = 1;
+    
+  $arr = [];
+    
+  public static function test(){
+	
+    foreach($arr as $ar){
+		
+      $var = @$ar['foo'] + 1;
+			
+    }
+		
+  }
+	
+  public static function staticTest(){
+	
+	if($arr[0]){
+		
+	  $var = $arr[0];
+			
 	}
-
-	public static function staticTest(){
-
-		@if($arr[0])
-
-			$var = $arr[0];
-
-		}
-
-	}
-
+		
+  }
+	
 }
 
 ```

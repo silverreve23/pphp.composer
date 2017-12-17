@@ -10,7 +10,7 @@ class Test{
 	
 		foreach($arr as $ar){
 		
-			$var = $ar['foo'] + 1;
+			$var = @$ar['foo'] + 1;
 			
 		}
 		
@@ -18,7 +18,7 @@ class Test{
 	
 	public static function staticTest(){
 	
-		@if($arr[0])
+		if($arr[0]){
 		
 			$var = $arr[0];
 			
