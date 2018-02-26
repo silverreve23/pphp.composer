@@ -18,33 +18,34 @@
 @php
 
 @class Test
+	
+	@var+ $testPublic = array();
+	@var- $testPrivate = 20;
+	@var. $testProtected = 'test';
+	
+	@var(static). $testStatic = 'static';
 
-  $test = 1;
-    
-  $arr = [];
-    
-  @function(static)+ test()
+	@function+ test()
 	
-	@foreach($arr as $ar)
+		@foreach(@this.test as $key => $val)
 		
-	  $var = @$ar.foo + 1;
+			echo $key.$val;
 			
+		@end
+		
 	@end
-		
-  @end
 	
-  @function(static)+ staticTest()
+	@function(static)- staticTest($test)
 	
-    @if($arr.0)
+		@if($test)
 		
-	  $var = $arr.0;
+			return true;
 			
-	@end
+		@end
 		
-  @end
+	@end
 	
 @end
-
 
 ```
 
@@ -55,30 +56,32 @@
 <?php
 
 class Test{
+	
+	public $testPublic = array();
+	private $testPrivate = 20;
+	protected $testProtected = 'test';
+	
+	protected static $testStatic = 'static';
 
-  $test = 1;
-    
-  $arr = [];
-    
-  public static function test(){
+	public function test(){
 	
-    foreach($arr as $ar){
+		foreach($this->test as $key => $val){
 		
-      $var = @$ar['foo'] + 1;
+			echo $key.$val;
 			
-    }
+		}
 		
-  }
-	
-  public static function staticTest(){
-	
-	if($arr[0]){
-		
-	  $var = $arr[0];
-			
 	}
+	
+	private static function staticTest($test){
+	
+		if($test){
 		
-  }
+			return true;
+			
+		}
+		
+	}
 	
 }
 
