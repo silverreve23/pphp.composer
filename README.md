@@ -18,33 +18,33 @@
 @php
 
 @class Test
-	
+
 	@var+ $testPublic = array();
 	@var- $testPrivate = 20;
 	@var. $testProtected = 'test';
-	
+
 	@var(static). $testStatic = 'static';
 
 	@function+ test()
-	
+
 		@foreach(@this.test as $key => $val)
-		
+
 			echo $key.$val;
-			
+
 		@end
-		
+
 	@end
-	
+
 	@function(static)- staticTest($test)
-	
+
 		@if($test)
-		
+
 			return true;
-			
+
 		@end
-		
+
 	@end
-	
+
 @end
 
 ```
@@ -56,33 +56,33 @@
 <?php
 
 class Test{
-	
+
 	public $testPublic = array();
 	private $testPrivate = 20;
 	protected $testProtected = 'test';
-	
+
 	protected static $testStatic = 'static';
 
 	public function test(){
-	
+
 		foreach($this->test as $key => $val){
-		
+
 			echo $key.$val;
-			
+
 		}
-		
+
 	}
-	
+
 	private static function staticTest($test){
-	
+
 		if($test){
-		
+
 			return true;
-			
+
 		}
-		
+
 	}
-	
+
 }
 
 ```
