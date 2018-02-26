@@ -9,6 +9,12 @@ var config = fs.readFileSync(
     __dirname + '/../config/config.json'
 );
 
+var accesseVals = {
+    '+' : 'public',
+    '-' : 'private',
+    '.' : 'protected',
+};
+
 var scanFilesTime = new Object();
 
 config = JSON.parse(config);
@@ -22,10 +28,12 @@ console.log(
     + 's\x1b[0m'
 );
 
-setInterval(
-    checkChangeFiles, 
-    sleepTime
-);
+//setInterval(
+//    checkChangeFiles, 
+//    sleepTime
+//);
+
+checkChangeFiles();
 
 function checkChangeFiles(dirScan = null){
     
@@ -124,23 +132,22 @@ function parseFile($filePath){
         });
 
         // Pares [variable] word
-        line = line.replace(/\@var\s*(\+)\s*\([$|\w|\s|,]*\)/, function(findedStr){
-
-            return 'public ' + findedStr.substr(5);
+        line = line.replace(/\@var(\(static\))?\s{0,}([\+|\-|\.]){0,}[$|\w|\s|,|=]{1,}/, function(findedStr, static, access){
+            
+            if(static)
+                return accesseVals[access] + ' static ' + findedStr.substr(14);
+            
+            return accesseVals[access] + findedStr.substr(5);
 
         });
         
         // Pares [function] word
-        line = line.replace(/\@function\s*(\+)\s*(\w+)\s*\([$|\w|\s|,]*\)/, function(findedStr){
-
-            return 'public function' + findedStr.substr(10) + "{";
-
-        });
-
-        // Pares [static function] word
-        line = line.replace(/\@function\(static\)\s*(\+)\s*(\w+)\s*\([$|\w|\s|,]*\)/, function(findedStr){
-
-            return 'public static function' + findedStr.substr(18) + "{";
+        line = line.replace(/\@function(\(static\))?\s*([\+|\-|\.])\s*(\w+)\s*\([$|\w|\s|,]*\)/, function(findedStr, static, access){
+            
+            if(static)
+                return accesseVals[access] + ' static function' + findedStr.substr(18) + "{";
+            
+            return accesseVals[access] + ' function' + findedStr.substr(10) + "{";
 
         });
 
@@ -152,9 +159,16 @@ function parseFile($filePath){
         });
 
         // Pares [end foreach] word
-        line = line.replace(/@foreach\s*\([\@\.\s\$|(\=\>)|\[\]|\w]{1,}\s*\)/, function(findedStr){
+        line = line.replace(/@foreach\s{0,}\([\@|\.|\s|\$|(\=\>)|\[|\]|\w]{1,}\s*\)/, function(findedStr){
 
             return findedStr.substr(1) + "{";
+
+        });
+        
+        // Pares [this] word
+        line = line.replace(/\@this\.[$|\w|\s]{1,}/, function(findedStr){
+
+            return '$this->' + findedStr.substr(6);
 
         });
 
