@@ -3,7 +3,7 @@ var mkdirp = require('mkdirp');
 
 var isError = false;
 
-var dirRoot = '../../';
+var dirRoot = '../../../';
 
 var sleepTime = 2000;
 
