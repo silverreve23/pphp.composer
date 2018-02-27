@@ -1,6 +1,6 @@
 {
   "name": "pphp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "PHP Preprocossor",
   "main": "index.js",
   "scripts": {

@@ -25,7 +25,7 @@
 
 	@var(static). $testStatic = 'static';
 
-	@function+ test()
+	@def+ test()
 
 		@foreach(@this.test as $key => $val)
 
@@ -35,7 +35,7 @@
 
 	@end
 
-	@function(static)- staticTest($test)
+	@def(static)- staticTest($test)
 
 		@if($test)
 
