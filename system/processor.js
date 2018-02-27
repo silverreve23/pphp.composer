@@ -1,7 +1,9 @@
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 
-var dirRoot = '../';
+var isError = false;
+
+var dirRoot = '../../';
 
 var sleepTime = 2000;
 
@@ -28,19 +30,35 @@ console.log(
     + 's\x1b[0m'
 );
 
-//setInterval(
-//    checkChangeFiles, 
-//    sleepTime
-//);
+var idInterval = setInterval(
+    checkChangeFiles, 
+    sleepTime
+);
 
 checkChangeFiles();
 
 function checkChangeFiles(dirScan = null){
     
     if(!dirScan)
-        dirScan = dirRoot + config.in;
+        dirScan = __dirname + '/' + dirRoot + config.in;
     
     fs.readdir(dirScan, function(err, items){
+		
+		if(err){
+            
+            isError = err;
+            
+            clearInterval(idInterval);
+			
+			console.log(
+                "\x1b[41mError: " 
+                + err.code
+                + ' code\x1b[0m'
+            );
+			
+			return false;
+			
+		}
         
         for(var i = 0; i < items.length; i++){
             
@@ -74,10 +92,10 @@ function isChangeFile(file){
         
             scanFilesTime[file] = fileTime;
 
-            dirParse(dirRoot + config.in);
+            dirParse(__dirname + '/' + dirRoot + config.in);
             
             console.log(
-                '\n\x1b[33m\t' 
+                '\x1b[33m\t' 
                 + file 
                 + ' changed!'
             );
@@ -142,12 +160,12 @@ function parseFile($filePath){
         });
         
         // Pares [function] word
-        line = line.replace(/\@function(\(static\))?\s*([\+|\-|\.])\s*(\w+)\s*\([$|\w|\s|,]*\)/, function(findedStr, static, access){
+        line = line.replace(/\@def(\(static\))?\s*([\+|\-|\.])\s*(\w+)\s*\([$|\w|\s|,]*\)/, function(findedStr, static, access){
             
             if(static)
-                return accesseVals[access] + ' static function' + findedStr.substr(18) + "{";
+                return accesseVals[access] + ' static function' + findedStr.substr(13) + "{";
             
-            return accesseVals[access] + ' function' + findedStr.substr(10) + "{";
+            return accesseVals[access] + ' function' + findedStr.substr(5) + "{";
 
         });
 
@@ -203,15 +221,17 @@ function parseFile($filePath){
         var pathOut = null;
         var pathMake = null;
         
-        fileOut = $filePath.replace(dirRoot + config.in + '/', '');
-        pathOut = dirRoot + config.out + '/';
-        fileOut = pathOut + fileOut;
-        pathMake = fileOut.replace(/\/\w{1,}\.php$/, '');
+        fileOut = $filePath.replace(
+            config.in,
+            config.out
+        );
         
-        console.log();
+        fileOut = fileOut.replace(/.blade/, '');
+        pathMake = fileOut.replace(/\/\w{1,}\.php$/, '');
         
         if(!newFileData)
             return false;
+        
         
         mkdirp(pathMake, (err) => {
             
