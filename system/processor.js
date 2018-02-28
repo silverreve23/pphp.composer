@@ -142,10 +142,41 @@ function parseFile($filePath){
     
     lineReader.on('line', function(line){
     
-        // Pares [class] word
-        line = line.replace(/@class\s.(\w+)/, function(findedStr){
+        // Pares [class] word 
+        line = line.replace(/@class\s.\w+(\s?@extends\s.\w+){0,}(\s?@implements\s.\w+){0,}/, function(findedStr){
+            
+            return findedStr.replace(/\@/g, '') + "{";
 
-            return findedStr.substr(1) + "{";
+
+        });    
+        
+        // Pares [extends] word 
+        line = line.replace(/@extends\s.\w+(\s?@implements\s.\w+){0,}/, function(findedStr){
+            
+            newFileData = newFileData.replace(/class[\s|\w]{0,}\{/, function(findedSubStr){
+            
+                return findedSubStr.replace(/\{/, '');
+
+
+            })
+            
+            return findedStr.replace(/\@/g, '') + "{";
+
+
+        });   
+        
+        // Pares [implements] word 
+        line = line.replace(/@implements\s.\w+/, function(findedStr){
+            
+            newFileData = newFileData.replace(/class[\s|\w|\n]{0,}extends[\s|\w]{0,}\{/, function(findedSubStr){
+            
+                return findedSubStr.replace(/\{/, '');
+
+
+            })
+            
+            return findedStr.replace(/[\@|\{]/g, '') + "{";
+
 
         });
 
@@ -160,10 +191,10 @@ function parseFile($filePath){
         });
         
         // Pares [function] word
-        line = line.replace(/\@def(\(static\))?\s*([\+|\-|\.])\s*(\w+)\s*\([$|\w|\s|,]*\)/, function(findedStr, static, access){
+        line = line.replace(/\@def(s)?\s*([\+|\-|\.])\s*(\w+)\s*\([$|\w|\s|,]*\)/, function(findedStr, static, access){
             
             if(static)
-                return accesseVals[access] + ' static function' + findedStr.substr(13) + "{";
+                return accesseVals[access] + ' static function' + findedStr.substr(6) + "{";
             
             return accesseVals[access] + ' function' + findedStr.substr(5) + "{";
 

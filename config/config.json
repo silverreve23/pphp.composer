@@ -1,4 +1,4 @@
 {
-    "in" : "pphpapp/app",
-    "out" : "pphpapp/out"
+    "in" : "resources/assets/php",
+    "out" : "."
 }
