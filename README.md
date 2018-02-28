@@ -8,80 +8,98 @@
 	This package is for those who like beautiful, orderly and easily program code!
 </p>
 
+### API
+
+Class patterns:
+
+* @php => <?php 
+* @class => class 
+* @extends => extends 
+* @implements => implements 
+* @var[+/-/.] => [public/private/protected] variable
+* @vars[+/-/.] => [public/private/protected] static variable
+* @def[+/-/.] => [public/private/protected] function
+* @defs[+/-/.] => [public/private/protected] static function
+
+Construction patterns:
+
+* @foreach => foreach 
+* @if => if 
+* @end => close construction
+
 ### Example:
 
-#### Source In
-##### This package in developer mode!!
+Source in:
 
-```
+```php
 
 @php
 
-@class Test
+namespace App\Http\Controllers;
 
-	@var+ $testPublic = array();
-	@var- $testPrivate = 20;
-	@var. $testProtected = 'test';
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use App\Classes\Contracts\ReplacerInterface;
 
-	@var(static). $testStatic = 'static';
+@class TestController
 
-	@def+ test()
+  @extends MainController
+  @implements ReplacerInterface
 
-		@foreach(@this.test as $key => $val)
+  use Request;
 
-			echo $key.$val;
+  @vars. $staticVar = 'TEST';
 
-		@end
+  @def+ __construct()
 
-	@end
+    parent::__construct();
 
-	@def(static)- staticTest($test)
+  @end
 
-		@if($test)
+  @defs+ testFunction($params)
 
-			return true;
+    return true;
 
-		@end
-
-	@end
+  @end
 
 @end
 
 ```
 
-#### Source Out
+Source out:
 
 ```php
 
 <?php
 
-class Test{
+namespace App\Http\Controllers;
 
-	public $testPublic = array();
-	private $testPrivate = 20;
-	protected $testProtected = 'test';
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use App\Classes\Contracts\ReplacerInterface;
 
-	protected static $testStatic = 'static';
+class TestController
 
-	public function test(){
+  extends MainController
+  implements ReplacerInterface{
 
-		foreach($this->test as $key => $val){
+  use Request;
 
-			echo $key.$val;
+  protected static $staticVar = 'TEST';
 
-		}
+  public function __construct(){
 
-	}
+    parent::__construct();
 
-	private static function staticTest($test){
+  }
 
-		if($test){
+  public static function testFunction($params){
 
-			return true;
+    return true;
 
-		}
-
-	}
+  }
 
 }
 

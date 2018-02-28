@@ -181,10 +181,10 @@ function parseFile($filePath){
         });
 
         // Pares [variable] word
-        line = line.replace(/\@var(\(static\))?\s{0,}([\+|\-|\.]){0,}[$|\w|\s|,|=]{1,}/, function(findedStr, static, access){
+        line = line.replace(/\@var(s)?\s{0,}([\+|\-|\.]){0,}[$|\w|\s|,|=]{1,}/, function(findedStr, static, access){
             
             if(static)
-                return accesseVals[access] + ' static ' + findedStr.substr(14);
+                return accesseVals[access] + ' static ' + findedStr.substr(7);
             
             return accesseVals[access] + findedStr.substr(5);
 
